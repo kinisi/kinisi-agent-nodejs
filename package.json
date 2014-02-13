@@ -1,0 +1,21 @@
+{
+  "name": "kinisi-agent",
+  "description": "Kinisi Agent written in Node.JS",
+  "version": "0.1.0",
+  "author": "Jeffrey Yang",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kinisi/kinisi-agent-nodejs.git"
+  },
+  "main": "kinisi-agent.js",
+  "dependencies": {
+    "config": "~0.4.x",
+    "node-gpsd": "~0.1.x"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": " >= 0.8.0"
+  }
+}
+
