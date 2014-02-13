@@ -11,5 +11,14 @@ pids
 logs
 results
 
+# Runtime files
+run
+config/runtime.json
+
+# Mac and VIM files
+.DS_Store
+*.sw*
+
+# Node libs
 npm-debug.log
 node_modules
