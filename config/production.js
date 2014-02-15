@@ -1,3 +1,9 @@
+var path = require("path");
+
+function userHome() {
+  return process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
+}
+
 module.exports = {
     "sample": {
         // in seconds
@@ -17,6 +23,6 @@ module.exports = {
     "device": {
         "id": "jyang805"
     },
-    "commit_dir": "~/.kinisiagent/commit",
-    "archive_dir": "~/.kinisiagent/archive"
+    "commit_dir": path.join(userHome(), ".kinisiagent/commit"),
+    "archive_dir": path.join(userHome(), ".kinisiagent/archive")
 }
