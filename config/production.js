@@ -5,6 +5,7 @@ function userHome() {
 }
 
 module.exports = {
+    "debug": false,
     "sample": {
         // in seconds
         "duration": 10,
