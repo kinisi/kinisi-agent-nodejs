@@ -146,7 +146,9 @@ function postDataPoint(filename, callback) {
         
         // archive the file.
         fs.rename(path.join(config.commit_dir, filename), path.join(config.archive_dir, filename), function() {
-            console.log("Archived " + filename);
+            if(config.debug) {
+                console.log("Archived " + filename);
+            }
         });
 
         callback && callback();
