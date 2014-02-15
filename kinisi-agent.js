@@ -95,8 +95,14 @@ function syncDuty() {
 }
 
 function flushDataPoints(callback) {
-    var async = { 
-        "counter": sentinel.samples.length,
+
+    // sampling strategy?
+    // for now, take the last item
+    var flushqueue = sentinel.samples.slice(-1),
+
+    // setup a callback after the queue has been flushed
+    async = { 
+        "counter": flushqueue.length,
         "results": [],
         "callback": function(err, results) { 
             // if err, could buffer in memory
@@ -105,9 +111,8 @@ function flushDataPoints(callback) {
         }
     };
 
-    // sampling strategy?
-    // for now, take the last item
-    sentinel.samples.slice(-1).forEach(function(datapoint) {
+    // flush
+    flushqueue.forEach(function(datapoint) {
         var filename = path.join(config.commit_dir, "TPV" + Date.now() + ".json");
         
         fs.writeFile(filename, JSON.stringify(datapoint), { "encoding": "utf8" }, function(err, result) {
