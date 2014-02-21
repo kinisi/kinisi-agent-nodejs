@@ -2,15 +2,30 @@ var http = require("http");
 var config = require("config");
 
 var unreliable = http.createServer(function (req, res) {
-  var uhoh = Math.random() < 0.2;
+    var uhoh = Math.random() < 0.2, msg = "";
 
-  if(uhoh) { 
-      res.writeHead(500, { "X-Error": "Something Bad Happened" });
-      res.end("Uh oh!");
-  } else {
-    res.writeHead(200);
-    res.end();
-  }
+    if(req.method == "GET" && Math.random() < 0.2) {
+        var json = { 
+            "sync": { "interval": parseInt(Math.random() * 8, 10) + 2 }, 
+        };
+
+        if(Math.random() < 0.5) {
+            json["sample"] = { 
+                "interval": parseInt(Math.random() * 3, 10) + 6,
+                "duration": parseInt(Math.random() * 3, 10) + 2
+            }
+        }
+        msg = JSON.stringify(json);
+
+    } else {
+        if(uhoh) { 
+            res.writeHead(500, { "X-Error": "Something Bad Happened" });
+        } else {
+            res.writeHead(200);
+        }
+    }
+    res.end(msg);
+
 });
 
 function goDown() {

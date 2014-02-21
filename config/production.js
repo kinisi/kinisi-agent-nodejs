@@ -8,8 +8,8 @@ module.exports = {
     "debug": false,
     "sample": {
         // in seconds
-        "duration": 10,
-        "interval": 30
+        "duration": 5,
+        "interval": 10
     },
     "sync" : {
         // in seconds
@@ -21,8 +21,17 @@ module.exports = {
             method: "POST"
         }
     },
+    "checkup": {
+        hostname: "ai1.kinisi.cc",
+        port: 8080,
+        path: "/geostore",
+        method: "GET"
+    },
     "device": {
         "id": "jyang805"
+    },
+    "auth": {
+        "token": "i1KBmvhIEoLK"
     },
     "commit_dir": path.join(userHome(), ".kinisiagent/commit"),
     "archive_dir": path.join(userHome(), ".kinisiagent/archive")

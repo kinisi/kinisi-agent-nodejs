@@ -15,8 +15,17 @@ module.exports = {
             method: "POST"
         }
     },
+    "checkup": {
+        hostname: "localhost",
+        port: 5674, // KNSI on the phone pad
+        path: "/1.0/checkup",
+        method: "GET"
+    },
     "device": {
         "id": "jyang805"
+    },
+    "auth": {
+        "token": "i1KBmvhIEoLK"
     },
     "commit_dir": "./run/commit",
     "archive_dir": "./run/archive"
