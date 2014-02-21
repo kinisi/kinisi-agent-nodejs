@@ -3,6 +3,7 @@ var util = require("util");
 
 var Listener = function(options) {
     console.log(options);
+    this.connected = false;
 }
 
 var dummydata = {
@@ -15,8 +16,9 @@ var dummydata = {
 
 util.inherits(Listener, events.EventEmitter);
 
-Listener.prototype.connect = function(callback) { process.nextTick(callback); };
-Listener.prototype.disconnect = function() { };
+Listener.prototype.connect = function(callback) { this.connected ^= 1; process.nextTick(callback); };
+Listener.prototype.isConnected = function() { return !!this.connected; };
+Listener.prototype.disconnect = function(callback) { this.connected ^= 1; process.nextTick(callback); };
 Listener.prototype.watch = function() {
     var self = this;
 

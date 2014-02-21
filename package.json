@@ -11,7 +11,7 @@
   "main": "kinisi-agent.js",
   "dependencies": {
     "config": "~0.4.x",
-    "node-gpsd": "~0.1.x"
+    "node-gpsd": "*"
   },
   "optionalDependencies": {},
   "engines": {
