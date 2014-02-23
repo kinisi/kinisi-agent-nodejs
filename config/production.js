@@ -16,9 +16,10 @@ module.exports = {
         "interval": 60,
         "http": { 
             hostname: "ai1.kinisi.cc",
-            port: 8080,
-            path: "/geostore",
-            method: "POST"
+            port: 9090,
+            path: "/geoserver/api/import",
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
         }
     },
     "checkup": {

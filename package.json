@@ -11,11 +11,12 @@
   "main": "kinisi-agent.js",
   "dependencies": {
     "config": "~0.4.x",
-    "node-gpsd": "*"
+    "node-gpsd": "*",
+    "leveldown": "~0.10.2",
+    "levelup": "~0.18.2"
   },
   "optionalDependencies": {},
   "engines": {
     "node": " >= 0.8.0"
   }
 }
-
