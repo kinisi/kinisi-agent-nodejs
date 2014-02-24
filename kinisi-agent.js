@@ -1,10 +1,11 @@
 var config = require("config");
 var sample = require("./lib/sample");
 var sync = require("./lib/sync");
+var logger = require("./lib/logger");
 
 // print some nice startup info
-console.log("Environment:", process.env.NODE_ENV || "default");
-console.log("Startup Configuration:", JSON.stringify(config, null, "\t"));
+logger.log("Environment:", process.env.NODE_ENV || "default");
+logger.log("Startup Configuration:", JSON.stringify(config, null, "\t"));
 
 // start sample and sync loops
 sample.start();
@@ -12,5 +13,5 @@ sync.start();
 
 // setup last-ditch exception handler
 process.on("uncaughtException", function (ex) {
-  console.log("Caught unhandled exception: ", ex);
+  logger.log("Caught unhandled exception: ", ex);
 });
