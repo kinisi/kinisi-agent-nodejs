@@ -6,7 +6,7 @@ var unreliable = http.createServer(function (req, res) {
 
     if(req.method == "GET" && Math.random() < 0.2) {
         var json = { 
-            "sync": { "interval": parseInt(Math.random() * 8, 10) + 2 }, 
+            "sync": { "interval": parseInt(Math.random() * 8, 10) + 10 }, 
         };
 
         if(Math.random() < 0.5) {

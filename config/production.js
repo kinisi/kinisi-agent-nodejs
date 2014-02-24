@@ -1,24 +1,21 @@
 var path = require("path");
 
-function userHome() {
-  return process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
-}
-
 module.exports = {
     "debug": false,
     "sample": {
         // in seconds
-        "duration": 5,
-        "interval": 10
+        "duration": 0,
+        "interval": 0
     },
     "sync" : {
         // in seconds
-        "interval": 60,
+        "interval": 10,
         "http": { 
             hostname: "ai1.kinisi.cc",
-            port: 8080,
-            path: "/geostore",
-            method: "POST"
+            port: 9090,
+            path: "/geoserver/api/import",
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
         }
     },
     "checkup": {
@@ -33,6 +30,6 @@ module.exports = {
     "auth": {
         "token": "i1KBmvhIEoLK"
     },
-    "commit_dir": path.join(userHome(), ".kinisiagent/commit"),
-    "archive_dir": path.join(userHome(), ".kinisiagent/archive")
+    "commit_dir": "/var/log/kinisiagent",
+    "archive_dir": "/var/log/kinisiagent/archive"
 }

@@ -1,0 +1,44 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          kinisiagent
+# Required-Start:    $remote_fs $network
+# Required-Stop:     $remote_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Kinisi Agent
+# Description:       Kinisi Agent written in Node.JS
+### END INIT INFO
+
+export PATH=$PATH:/usr/local/bin
+export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
+export NODE_ENV=${NODE_ENV:-"production"}
+
+FOREVER=/usr/local/bin/forever
+
+LOGDIR=/var/log/kinisiagent
+SRCDIR=/usr/local/kinisi-agent-nodejs
+PIDFILE=/var/run/kinisiagent.pid
+
+if [ ! -d $LOGDIR ]; then
+	mkdir -p $LOGDIR
+fi
+
+case "$1" in
+  start)
+  pushd $SRCDIR
+  $FOREVER start -p $SRCDIR --sourceDir $SRCDIR --pidFile $PIDFILE -a -o $LOGDIR/out.log -l $LOGDIR/forever.log -e $LOGDIR/err.log kinisi-agent.js
+  popd
+  ;;
+stop)
+  $FOREVER stop -p $SRCDIR kinisi-agent.js
+  ;;
+status)
+  ps up $(cat $PIDFILE) 
+  ;;
+*)
+  echo "Usage: /etc/init.d/kinisiagent {start|stop|status}"
+  exit 1
+  ;;
+esac
+
+exit 0

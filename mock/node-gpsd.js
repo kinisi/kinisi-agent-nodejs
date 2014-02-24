@@ -7,12 +7,24 @@ var Listener = function(options) {
 }
 
 var dummydata = {
-    "class": "TPV",
-    "lat": 40.213,
-    "lon": 23.541,
-    "epv": 0.450,
+    "class":"TPV",
+    "tag":"RMC",
+    "device":"stdin",
+    "mode":3,
+    "time":new Date().toISOString(),
+    "ept":0.005,
+    "lat": 40.6609478,
+    "lon": -73.9751039,
+    "alt":1.320,
+    "epx":8.636,
+    "epy":7.507,
+    "epv":29.336,
+    "track":0.0000,
+    "speed":0.000,
+    "climb":0.000,
     "counter": 0
-};
+}
+
 
 util.inherits(Listener, events.EventEmitter);
 
@@ -25,6 +37,7 @@ Listener.prototype.watch = function() {
     self.timer = setInterval(function() { 
         self.emit("TPV", JSON.stringify(dummydata));
         dummydata.counter++;
+        dummydata.time = new Date().toISOString();
     }, 1000);
 };
 
