@@ -10,6 +10,7 @@ module.exports = {
     "sync" : {
         // in seconds
         "interval": 10,
+        "maxrecords": 1000,
         "http": { 
             hostname: "ai1.kinisi.cc",
             port: 9090,

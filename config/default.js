@@ -8,6 +8,7 @@ module.exports = {
     "sync" : {
         // in seconds
         "interval": 5,
+        "maxrecords": 1000,
         "http": { 
             hostname: "localhost",
             port: 5674, // KNSI on the phone pad
