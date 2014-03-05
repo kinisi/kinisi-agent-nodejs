@@ -21,12 +21,6 @@ module.exports = {
         "path": "/geoserver/api/config",
         "method": "GET"
     },
-    "device": {
-        "id": "jyang805"
-    },
-    "auth": {
-        "token": "N9yCFXqDJvg6"
-    },
     "commit_dir": "/var/log/kinisiagent",
     "archive_dir": "/var/log/kinisiagent/archive"
 }
