@@ -1,7 +1,21 @@
-var http = require("http");
+var https = require("https");
+var fs = require("fs");
 var config = require("config");
 
-var unreliable = http.createServer(function (req, res) {
+// See these issues for why this hack is here:
+// https://github.com/joyent/node/issues/5045
+// https://github.com/joyent/node/issues/4984
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+var ssl = {
+  key: fs.readFileSync(__dirname + '/server.key'),
+  cert: fs.readFileSync(__dirname + '/server.crt'),
+  ca: fs.readFileSync(__dirname + '/ca.crt'),
+  requestCert: true,
+  rejectUnauthorized: false
+};
+
+var unreliable = https.createServer(ssl, function (req, res) {
     var uhoh = Math.random() < 0.2, msg = "";
 
     if(req.method == "GET" && Math.random() < 0.2) {
@@ -37,7 +51,7 @@ function goDown() {
 
 function goUp() {
     var uptime = parseInt(Math.random() * 60 + 20, 10);
-    unreliable.listen(config.sync.http.port, "localhost", 511, function() {
+    unreliable.listen(config.sync.port, "localhost", 511, function() {
         console.warn("Kinisi Mock Server is up!", "Will go down in " + uptime + "s");
     });
     setTimeout(goDown, 1000 * uptime);

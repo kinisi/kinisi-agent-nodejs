@@ -9,24 +9,23 @@ module.exports = {
         // in seconds
         "interval": 5,
         "maxrecords": 1000,
-        "http": { 
-            hostname: "localhost",
-            port: 5674, // KNSI on the phone pad
-            path: "/1.0/gpsd",
-            method: "POST"
-        }
+        // endpoint settings
+        "hostname": "localhost",
+        "port": 5674, // KNSI on the phone pad
+        "path": "/1.0/gpsd",
+        "method": "POST"
     },
     "checkup": {
-        hostname: "localhost",
-        port: 5674, // KNSI on the phone pad
-        path: "/1.0/checkup",
-        method: "GET"
+        "hostname": "localhost",
+        "port": 5674, // KNSI on the phone pad
+        "path": "/1.0/checkup",
+        "method": "GET"
     },
     "device": {
         "id": "jyang805"
     },
     "auth": {
-        "token": "i1KBmvhIEoLK"
+        "token": "N9yCFXqDJvg6"
     },
     "commit_dir": "./run/commit",
     "archive_dir": "./run/archive"
