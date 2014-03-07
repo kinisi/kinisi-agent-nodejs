@@ -15,10 +15,8 @@ $ node kinisi-agent.js
 ```
 
 
-Deployed on a Raspberry Pi:
-```sh
-# If you didn't tarball/scp the entire directory, first run the install:
-# npm install
-$ export NODE_ENV=production
-$ node kinisi-agent.js
-```
+### Raspberry Pi:
+
+[Proof-of-Concept (POC) Setup](https://github.com/kinisi/kinisi-agent-nodejs/wiki/POC.2-Setup): a full POC deployment procedure.
+
+[Upgrade procedures](https://github.com/kinisi/kinisi-agent-nodejs/wiki/POC-Upgrade): for moving from one POC version to another.
