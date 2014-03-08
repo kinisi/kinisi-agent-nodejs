@@ -35,7 +35,7 @@ Listener.prototype.watch = function() {
     var self = this;
 
     self.timer = setInterval(function() { 
-        self.emit("TPV", JSON.stringify(dummydata));
+        self.emit("TPV", dummydata);
         dummydata.counter++;
         dummydata.time = new Date().toISOString();
     }, 1000);
