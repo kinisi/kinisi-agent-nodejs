@@ -14,6 +14,7 @@ export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
 export NODE_ENV=${NODE_ENV:-"production"}
 
 FOREVER=/usr/local/bin/forever
+HOME=/root
 
 LOGDIR=/var/log/kinisiagent
 SRCDIR=/usr/local/kinisi-agent-nodejs
@@ -30,7 +31,10 @@ case "$1" in
   popd
   ;;
 stop)
-  $FOREVER stop -p $SRCDIR kinisi-agent.js
+  $FOREVER stop kinisi-agent.js
+  ;;
+restart)
+  $FOREVER restart kinisi-agent.js
   ;;
 status)
   ps up $(cat $PIDFILE) 
