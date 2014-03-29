@@ -6,7 +6,7 @@ var Listener = function(options) {
     this.connected = false;
 }
 
-var dummydata = {
+var dummydata = [{
     "class":"TPV",
     "tag":"RMC",
     "device":"stdin",
@@ -23,8 +23,16 @@ var dummydata = {
     "speed":0.000,
     "climb":0.000,
     "counter": 0
-}
-
+},
+{
+    "class":"TPV",
+    "tag":"RMC",
+    "device":"stdin",
+    "mode":1,
+    "time":new Date().toISOString(),
+    "track":0.0000,
+    "counter": 0
+}];
 
 util.inherits(Listener, events.EventEmitter);
 
@@ -35,9 +43,10 @@ Listener.prototype.watch = function() {
     var self = this;
 
     self.timer = setInterval(function() { 
-        self.emit("TPV", dummydata);
-        dummydata.counter++;
-        dummydata.time = new Date().toISOString();
+        var data = dummydata[Math.ceil(.02 - Math.random() * .1)];
+        data.counter++;
+        data.time = new Date().toISOString();
+        self.emit("TPV", data);
     }, 1000);
 };
 
