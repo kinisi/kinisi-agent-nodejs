@@ -1,7 +1,7 @@
 {
   "name": "kinisi-agent",
   "description": "Kinisi Agent written in Node.JS",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Jeffrey Yang",
   "private": true,
   "repository": {
