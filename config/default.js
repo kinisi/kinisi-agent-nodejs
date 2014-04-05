@@ -22,7 +22,7 @@ module.exports = {
         "method": "GET"
     },
     "device": {
-        "id": "jyang805"
+        "id": "kpoc-06",
     },
     "auth": {
         "token": "N9yCFXqDJvg6"
