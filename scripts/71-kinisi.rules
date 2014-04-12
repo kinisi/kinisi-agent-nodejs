@@ -1,0 +1,8 @@
+
+# Map the 3G/2G/GPRS cellular data connection to cellular0, ...
+#SUBSYSTEM=="usb", ATTRS{vendor}=="0x12d1", ATTRS{device}=="0x14c9", SYMLINK+="cellular%n"
+# The Huawei dongle automatically gets mapped to /dev/gsmmodem
+
+# Map the GPS device properly
+# 067b:2303
+SUBSYSTEM=="usb", ATTRS{vendor}=="0x067b", ATTRS{device}=="0x2303", SYMLINK+="gps%n"

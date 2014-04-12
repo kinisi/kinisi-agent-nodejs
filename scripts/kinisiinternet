@@ -1,0 +1,48 @@
+#! /bin/sh 
+# /etc/init.d/wvdial
+
+### BEGIN INIT INFO
+# Provides:          TheInternet
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Simple script to start a program at boot
+# Description:       A simple script from www.stuffaboutcode.com which will start / stop a program a boot / shutdown.
+### END INIT INFO
+
+# If you want a command to always run, put it here
+KDIR=/var/log/kinisiinternet
+
+mkdir -p "${KDIR}" || true
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting GPRS Internet"
+    lsusb | grep "12d1:14d1" -q
+    if [ $? -eq 0 ] ; then
+      usb_modeswitch -c /etc/usb_modeswitch.d/12d1\:14d1
+    fi
+    sleep 5
+    while [ ! -e /dev/gsmmodem ] ; do
+      echo waiting for modem
+      #stat /dev/gsmmodem 2> /dev/null
+      #RC=$?
+      sleep 1
+    done  
+    # run application you want to start
+    /sbin/start-stop-daemon --start --background --quiet --no-close --pidfile "{KDIR}/wvdial.pid" --exec /usr/bin/wvdial bluevia > "${KDIR}/wvdial.stdout" 2> "${KDIR}/wvdial.stderr"
+    ;;
+  stop)
+    echo "Stopping GPRS Internet"
+    # kill application you want to stop
+    /sbin/start-stop-daemon --stop --pidfile "${KDIR}/wvdial.pid" --exec /usr/bin/wvdial
+    ;;
+  *)
+    echo "Usage: /etc/init.d/kinisiinternet {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
