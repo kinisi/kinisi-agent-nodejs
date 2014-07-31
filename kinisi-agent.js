@@ -21,13 +21,14 @@ var main = function() {
 var deviceid_setup = function(callback) {
   // Supported software platforms
   var id_cmds = {
-    'rpi-linux': ["grep -q 'Serial          :' /proc/cpuinfo", "cat /proc/cpuinfo | grep Serial | cut -d : -f 2 | tr -d ' ' | tr -d '\\n'"],
+    'rpi-linux': ["egrep -q 'Serial\\s+:' /proc/cpuinfo", "cat /proc/cpuinfo | grep Serial | cut -d : -f 2 | tr -d ' ' | tr -d '\\n'"],
     'mac-osx': ["which sw_vers", "ioreg -rd1 -c IOPlatformExpertDevice | grep UUID | cut -d = -f 2 | tr -d '\"' | tr -d ' ' | tr -d '\\n'"], // Watch for that inner quote (") escape
-    'generic-linux': ["stat /etc/issue",
-                      function() {
-                        remote.generalExtend(config, {"device": {"id":uuid.v4(), "ostype":'generic-linux'}})
-                      }
-                     ],
+//  Weird race right now
+//    'generic-linux': ["stat /etc/issue",
+//                      function() {
+//                        remote.generalExtend(config, {"device": {"id":uuid.v4(), "ostype":'generic-linux'}})
+//                      }
+//                     ],
   };
 
   // Update the configuration with the device id
@@ -44,7 +45,7 @@ var deviceid_setup = function(callback) {
   }
 
   // Search for the architecture-specific device id if we haven't already set it
-  if (config.device.id == "") {
+  if (config.device.ostype != "generic-linux") {
     var id_cmd = null;
     Object.keys(id_cmds).forEach(function (key) {
       if (id_cmd != null) {
