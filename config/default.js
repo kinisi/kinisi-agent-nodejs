@@ -1,3 +1,5 @@
+var auth = require("./auth")
+
 module.exports = {
     "debug": true,
     "sample": {
@@ -24,9 +26,7 @@ module.exports = {
     "device": {
         "id": "",
     },
-    "auth": {
-        "token": "N9yCFXqDJvg6"
-    },
+    "auth": require("./auth"),
     "commit_dir": "./run/commit",
     "archive_dir": "./run/archive"
 }
