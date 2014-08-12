@@ -14,7 +14,8 @@
     "node-gpsd": "*",
     "leveldown": "~0.10.2",
     "levelup": "~0.18.2",
-    "uuid": "*"
+    "uuid": "*",
+    "bleno": "~0.1.5"
   },
   "optionalDependencies": {},
   "engines": {

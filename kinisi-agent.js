@@ -6,6 +6,7 @@ var remote = require("./lib/remote");
 var terminal = require("./lib/terminal");
 var mac = require("./lib/mac");
 var uuid = require("uuid");
+var bt = require("./lib/bt")
 
 var main = function() {
   // print some nice startup info
