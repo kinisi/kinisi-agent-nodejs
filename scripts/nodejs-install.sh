@@ -1,4 +1,6 @@
 #!/bin/bash
+# This is a helper script to install Nodejs
+# In the installation order, this script comes after the Pi has been setup and GPSD installed
 cd /usr/local
 wget http://nodejs.org/dist/v0.10.24/node-v0.10.24-linux-arm-pi.tar.gz
 tar xzf node-v0.10.24-linux-arm-pi.tar.gz
