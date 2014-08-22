@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 # /etc/init.d/wvdial
 
 ### BEGIN INIT INFO
@@ -21,9 +21,9 @@ mkdir -p "${KDIR}" || true
 case "$1" in
   start)
     echo "Starting GPRS Internet"
-    dev=$(ls -1 /dev/serial/by-id/usb-*-if00-port0)
+    devglob="/dev/serial/by-id/usb-*-if00-port0"
     echo > "${KDIR}/log.out"
-    while [ ! -e $dev ] ; do
+    while [ ! -e $devglob ] ; do
        echo "starting device" >> "${KDIR}/log.out"
 
        lsusb | grep "12d1:14d1" -q
@@ -40,6 +40,7 @@ case "$1" in
 
        sleep 5
     done
+    dev=$(ls -1 $devglob)
     echo -e "AT+CPIN=1111\r" > "$dev"
     while read line ; do 
        echo "line: [$line]" >> "${KDIR}/log.out"
@@ -60,6 +61,8 @@ case "$1" in
     else
       WVPROFILE="tmobile"
     fi
+    # wvdial needs /dev/kinisimodem
+    ln -sf "$dev" /dev/kinisimodem
     # run application you want to start
     /sbin/start-stop-daemon --start --background --quiet --no-close --retry forever/1 --pidfile "${KDIR}/wvdial.pid" --make-pidfile --exec /usr/bin/wvdial "${WVPROFILE}" > "${KDIR}/wvdial.stdout" 2> "${KDIR}/wvdial.stderr"
     ;;
