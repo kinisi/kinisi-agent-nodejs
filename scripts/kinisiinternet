@@ -1,4 +1,4 @@
-#! /bin/sh 
+#!/bin/bash
 # /etc/init.d/wvdial
 
 ### BEGIN INIT INFO
@@ -13,6 +13,7 @@
 
 # If you want a command to always run, put it here
 KDIR=/var/log/kinisiinternet
+KSCR=/usr/local/kinisi-agent-nodejs/scripts
 
 mkdir -p "${KDIR}" || true
 
@@ -20,24 +21,53 @@ mkdir -p "${KDIR}" || true
 case "$1" in
   start)
     echo "Starting GPRS Internet"
-    lsusb | grep "12d1:14d1" -q
-    if [ $? -eq 0 ] ; then
-      usb_modeswitch -c /etc/usb_modeswitch.d/12d1\:14d1
+    dev=$(ls -1 /dev/serial/by-id/usb-*-if00-port0)
+    echo > "${KDIR}/log.out"
+    while [ ! -e $dev ] ; do
+       echo "starting device" >> "${KDIR}/log.out"
+
+       lsusb | grep "12d1:14d1" -q
+       if [ $? -eq 0 ] ; then
+         usb_modeswitch -c ${KSCR}/12d1\:14d1
+         echo "found 12d1:14d1" >> "${KDIR}/log.out"
+       fi
+
+       lsusb | grep "12d1:14fe" -q
+       if [ $? -eq 0 ] ; then
+         usb_modeswitch -c ${KSCR}/12d1\:14fe
+         echo "found 12d1:14fe" >> "${KDIR}/log.out"
+       fi
+
+       sleep 5
+    done
+    echo -e "AT+CPIN=1111\r" > "$dev"
+    while read line ; do 
+       echo "line: [$line]" >> "${KDIR}/log.out"
+       if [[ $line == OK* ]] ; then
+	  echo "Pin entered successfully" >> "${KDIR}/log.out"
+	  break
+       elif [[ $line == *ERROR* ]] ; then
+	  echo "Pin error detected" >> "${KDIR}/log.out"
+	  break 
+       else
+	  echo "Unknown line [$line]" >> "${KDIR}/log.out"
+       fi
+    done < "$dev"
+    WVPROFILE=""
+    ICCID=$("${KSCR}/get_iccid.sh" "$dev")
+    if [[ $ICCID == 89320300* ]] ; then
+      WVPROFILE="base"
+    else
+      WVPROFILE="tmobile"
     fi
-    sleep 5
-    while [ ! -e /dev/gsmmodem ] ; do
-      echo waiting for modem
-      #stat /dev/gsmmodem 2> /dev/null
-      #RC=$?
-      sleep 1
-    done  
     # run application you want to start
-    /sbin/start-stop-daemon --start --background --quiet --no-close --pidfile "{KDIR}/wvdial.pid" --exec /usr/bin/wvdial bluevia > "${KDIR}/wvdial.stdout" 2> "${KDIR}/wvdial.stderr"
+    /sbin/start-stop-daemon --start --background --quiet --no-close --retry forever/1 --pidfile "${KDIR}/wvdial.pid" --make-pidfile --exec /usr/bin/wvdial "${WVPROFILE}" > "${KDIR}/wvdial.stdout" 2> "${KDIR}/wvdial.stderr"
     ;;
   stop)
     echo "Stopping GPRS Internet"
     # kill application you want to stop
     /sbin/start-stop-daemon --stop --pidfile "${KDIR}/wvdial.pid" --exec /usr/bin/wvdial
+    rm -f "${KDIR}/wvdial.pid"
     ;;
   *)
     echo "Usage: /etc/init.d/kinisiinternet {start|stop}"

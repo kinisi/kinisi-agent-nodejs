@@ -2,6 +2,10 @@
 
 dev=/dev/gsmmodem
 
+if [ ! -z $1 ] ; then
+   dev="$1"
+fi
+
 # From http://en.wikibooks.org/wiki/Serial_Programming/Serial_Linux
 
 if tty -s < "$dev"; then
@@ -27,7 +31,7 @@ pid=$$
 #       or crashes.
 ##( stty ispeed 460800 ospeed 460800; cat; )& < $dev
 #( cat $dev; )& #< $dev
-(while read line ; do if [[ $line != OK* ]] ; then if [[ $line == ^ICCID* ]] ; then echo $line | grep ICCID: | cut -d: -f2 | tr -d ' ' | tr -d '\n' | tr -d '\r' ; fi ; else true ; break ; fi ; done < /dev/gsmmodem) &
+(while read line ; do if [[ $line != OK* ]] ; then if [[ $line == ^ICCID* ]] ; then echo $line | grep ICCID: | cut -d: -f2 | tr -d ' ' | tr -d '\n' | tr -d '\r' ; fi ; else true ; break ; fi ; done < $dev) &
 bgPid=$?
 #cho $bgPid
 # Read commands from user, send them to device
