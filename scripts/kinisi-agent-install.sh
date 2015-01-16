@@ -1,9 +1,8 @@
 #!/bin/bash
 # This is a helper script for installing the Kinisi agent
-# This script assumes that the tarred code is already present as /usr/local/master.tar.gz
-cd /usr/local
-tar xzf master.tar.gz
-mv kinisi-agent-nodejs-master kinisiagent-nodejs
+# This script assumes that the agent is untarred already at /usr/local/ and nodejs-install.sh was run. 
+# tar xzf master.tar.gz
+mv kinisi-agent-nodejs-master kinisi-agent-nodejs
 cd kinisi-agent-nodejs
 # Install NPM dependencies
 npm install
