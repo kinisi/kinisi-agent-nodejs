@@ -13,5 +13,5 @@ mkdir -p /usr/local/kinisi-agent/nodejs/run/commit
 # Install Service
 cp /usr/local/kinisi-agent-nodejs/scripts/kinisiagent /etc/init.d/kinisiagent
 chmod 755 /etc/init.d/kinisiagent
-update-rd.d kinisiagent defaults
+update-rc.d kinisiagent defaults
 echo Done with Kinisi Agent Install Script
