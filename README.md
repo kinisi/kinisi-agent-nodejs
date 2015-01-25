@@ -6,6 +6,10 @@ Kinisi Agent written in NodeJS
 
 ### Getting Started
 
+For full step-by-step instructions on provisioning a new Kinisi device from scratch using this code and scripts contained in this repository, see the [New Image Provisioning Steps Guide](https://github.com/kinisi/kinisi-agent-nodejs/wiki/New-Image-Provisioning-Steps-v1.0). 
+
+### Additional legacy information from initial commit and updates during 2014 contained below
+
 Start on local mocks (without a GPS device or remote kinisi server):
 
 ```sh
