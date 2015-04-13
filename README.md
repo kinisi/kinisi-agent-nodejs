@@ -24,3 +24,11 @@ $ node kinisi-agent.js
 [Proof-of-Concept (POC) Setup](https://github.com/kinisi/kinisi-agent-nodejs/wiki/POC-Setup): a full POC deployment procedure.
 
 [Upgrade procedures](https://github.com/kinisi/kinisi-agent-nodejs/wiki/POC-Upgrade): for moving from one POC version to another.
+
+### Quick Tips on Usage:
+
+LED Indicators: 
+
+GPS Data Indicators - On the GPS dongle/unit, a blinking red LED indicates a signal lock with one or more satellites, while a solid red indicates there is no lock. Note that a satellite lock by the GPS unit does not necessarily indicate that the Kinisi device/app is properly retrieving the GPS data from the dongle. The blinking red LED, which is built-in near the Micro USB power input, indicates that the device/app is retrieving the GPS data from the dongle and caching it on the device. 
+
+Cloud Syncing Indicator - On a Raspberry Pi models B, B+ and B+ version 2, a blinking green (built-in) LED near the Micro USB power input indicates that the device is syncing data with the cloud properly. 
