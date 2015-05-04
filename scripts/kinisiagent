@@ -19,6 +19,7 @@ HOME=/root
 LOGDIR=/var/log/kinisiagent
 SRCDIR=/usr/local/kinisi-agent-nodejs
 PIDFILE=/var/run/kinisiagent.pid
+FUID=kinisiagent
 
 if [ ! -d $LOGDIR ]; then
 	mkdir -p $LOGDIR
@@ -26,23 +27,34 @@ fi
 
 case "$1" in
   start)
-  pushd $SRCDIR
-  $FOREVER start -p $SRCDIR --sourceDir $SRCDIR --pidFile $PIDFILE -a -o $LOGDIR/out.log -l $LOGDIR/forever.log -e $LOGDIR/err.log kinisi-agent.js
-  popd
-  ;;
-stop)
-  $FOREVER stop kinisi-agent.js
-  ;;
-restart)
-  $FOREVER restart kinisi-agent.js
-  ;;
-status)
-  ps up $(cat $PIDFILE) 
-  ;;
-*)
-  echo "Usage: /etc/init.d/kinisiagent {start|stop|status}"
-  exit 1
-  ;;
+    pushd $SRCDIR
+    $FOREVER start -p $SRCDIR --uid "$FUID" --sourceDir $SRCDIR --pidFile $PIDFILE -a -o $LOGDIR/out.log -l $LOGDIR/forever.log -e $LOGDIR/err.log --minUptime 1000 --spinSleepTime 1000 kinisi-agent.js
+    popd
+    ;;
+  stop)
+    if [ -e $PIDFILE ]; then 
+      $FOREVER stop $FUID
+    fi
+    ;;
+  restart)
+    if [ -e $PIDFILE ]; then 
+      $FOREVER restart $FUID
+    else
+      echo "kinisi agent pid file not found, consider calling start"
+      exit 1
+    fi
+    ;;
+  status)
+    if [ -e $PIDFILE ]; then
+      ps up $(cat $PIDFILE)
+    else
+      echo "kinisi agent pid file not found"
+    fi 
+    ;;
+  *)
+    echo "Usage: /etc/init.d/kinisiagent {start|stop|restart|status}"
+    exit 1
+    ;;
 esac
 
 exit 0
